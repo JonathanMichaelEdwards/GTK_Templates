@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "gtk.h": "c",
+        "window_1.h": "c",
+        "cstdlib": "c",
+        "setup.h": "c",
+        "gtkimcontext.h": "c",
+        "gtkimage.h": "c",
+        "stdio.h": "c",
+        "gdk.h": "c",
+        "gtkaboutdialog.h": "c",
+        "gdkconfig.h": "c",
+        "glib.h": "c",
+        "galloca.h": "c",
+        "gtypes.h": "c"
+    }
+}

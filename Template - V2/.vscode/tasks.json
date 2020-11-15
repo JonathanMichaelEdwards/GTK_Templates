@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build",
+			"command": "make",
+			"type": "shell",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+                "showReuseMessage": true,
+                "clear": true
+            },
+		},
+		
+		{
+			"label": "Run",
+			"command": "./template.exe",
+			"type": "shell",
+			"presentation": {
+                "showReuseMessage": true,
+				"clear": true,
+			}
+		},
+
+		{
+			"label": "Clean",
+			"command": "make clean",
+			"type": "shell",
+			"presentation": {
+                "showReuseMessage": true,
+				"clear": true,
+			}
+		}
+	]
+}
