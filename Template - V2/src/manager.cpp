@@ -30,7 +30,7 @@ const char *WidgetNames[STRUCT_SIZE] = {
  * Exit button action.
  * - Exit's the App.
  */
-extern "C" void on_optManage_destroy(void)
+extern "C"void on_optManage_destroy(void)
 {
     gtk_main_quit();
 }
