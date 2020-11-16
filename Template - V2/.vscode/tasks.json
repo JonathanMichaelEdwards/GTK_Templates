@@ -17,7 +17,7 @@
 		
 		{
 			"label": "Run",
-			"command": "./template.exe",
+			"command": "cd app && ./template.exe",
 			"type": "shell",
 			"presentation": {
                 "showReuseMessage": true,

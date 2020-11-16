@@ -37,34 +37,34 @@
 
 # Definitions.
 CC = g++
-INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
+INCLUDES = -I./include
 CFLAGS = -g -Wall -std=c++17 $(INCLUDES) -pthread
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
 
 
 # Default target.
-all: template.exe
+all: app/template.exe
 # cd app && python3.6 build.py build && chmod +x app/*.desktop
 
 
-# Compile: create object files from C source files.
-app/main.o: src/main.c
-	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+# Getting Object Name Automatically.
+SOURCES = $(wildcard src/*.cpp)
+OBJECTS = $(patsubst src/%.cpp, app/%.o, $(SOURCES))
 
-app/manager.o: src/manager.c
-	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
+app/%.o: src/%.cpp
+	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
 
 
 # Link: create ELF output file from object files.
-template.exe: app/main.o app/manager.o
+app/template.exe: $(OBJECTS)
 	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
 	
 
 # Target: Clean Project.
 .PHONY: cleanProject
 clean:
-	cd app && rm -f *.o *.out
+	cd app && rm -f *.o *.exe
 # cd app && python3.6 build.py remove
 	
 
@@ -100,3 +100,79 @@ clean:
 # 	@echo $(PRINT_END)
 # 	@echo $(LINK_NAN_MESSAGE)
 # 	@echo $(PRINT_BEGIN)
+
+
+
+# # Definitions.
+# CC = gcc
+# INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
+# CFLAGS = -g -Wall -std=c99 $(INCLUDES) -pthread
+# GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
+
+
+# # Default target.
+# all: app/Code_Manager.out
+# 	cd app && python3.6 build.py build && chmod +x app/*.desktop
+
+
+# # Compile: create object files from C source files.
+# app/main.o: src/main.c
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/chooseFolder.o: src/Dialog/chooseFolder.c include/Dialog/chooseFolder.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/manager.o: src/manager.c include/manager.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/createProject.o: src/Create_Project/createProject.c include/Create_Project/createProject.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+
+# # Link: create ELF output file from object files.
+# app/Code_Manager.out: app/main.o app/chooseFolder.o app/manager.o app/createProject.o
+# 	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
+	
+
+# # Target: Clean Project.
+# .PHONY: cleanProject
+# clean:
+# 	cd app && rm -f *.o *.out
+# 	cd app && python3.6 build.py remove
+# 	# Definitions.
+# CC = gcc
+# INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
+# CFLAGS = -g -Wall -std=c99 $(INCLUDES) -pthread
+# GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
+
+
+# # Default target.
+# all: app/Code_Manager.out
+# 	cd app && python3.6 build.py build && chmod +x app/*.desktop
+
+
+# # Compile: create object files from C source files.
+# app/main.o: src/main.c
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/chooseFolder.o: src/Dialog/chooseFolder.c include/Dialog/chooseFolder.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/manager.o: src/manager.c include/manager.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+# app/createProject.o: src/Create_Project/createProject.c include/Create_Project/createProject.h
+# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
+
+
+# # Link: create ELF output file from object files.
+# app/Code_Manager.out: app/main.o app/chooseFolder.o app/manager.o app/createProject.o
+# 	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
+	
+
+# # Target: Clean Project.
+# .PHONY: cleanProject
+# clean:
+# 	cd app && rm -f *.o *.out
+# 	cd app && python3.6 build.py remove
+	

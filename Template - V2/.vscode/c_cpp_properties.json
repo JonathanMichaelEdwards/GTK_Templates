@@ -8,7 +8,7 @@
                 "/usr/include/glib-2.0"
             ],
             "defines": [],
-            "compilerPath": "gcc",
+            "compilerPath": "g++",
             "cStandard": "c11",
             "cppStandard": "c++17"
         }
