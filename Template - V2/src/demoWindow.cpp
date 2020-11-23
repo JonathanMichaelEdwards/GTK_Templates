@@ -1,7 +1,7 @@
-// #include <iostream>
 #include <gtk/gtk.h>
-#include "manager.h"
+#include "demoWindow.h"
 #include "createWindow.h"
+
 
 #define LEN_OF_FILE(FILENAME) 18 + strlen(FILENAME)
 #define FILENAME "template" // glade file name
@@ -20,7 +20,7 @@ const char *WidgetNames[STRUCT_SIZE] = {
  * Exit button action.
  * - Exit's the App.
  */
-extern "C" void on_optManage_destroy(void)
+extern "C" void destroy(void)
 {
     gtk_main_quit();
 }
@@ -30,10 +30,9 @@ extern "C" void on_optManage_destroy(void)
  * Create button action.
  * - When pushed, go to the choose options window.
  */
-extern "C" void on_btnFile_clicked(GtkButton *button, Layout *_window)
+extern "C" void btnFile(GtkButton *button, Layout *_window)
 {
     DESTROY_WIDGET(_window->window);
-    // createProject();
 }
 
 
@@ -42,7 +41,7 @@ extern "C" void on_btnFile_clicked(GtkButton *button, Layout *_window)
  */
 void manager(void)
 {
-    Widget *_window = (Widget*)malloc(sizeof(Widget));
+    Window *_window = NULL;
 
-    createWindow(_window, WidgetNames, FILENAME, STRUCT_SIZE);
+    BuildWindow window(_window, WidgetNames, FILENAME, STRUCT_SIZE);
 }

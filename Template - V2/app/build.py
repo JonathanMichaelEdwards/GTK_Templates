@@ -35,14 +35,14 @@ def makeFile():
     if len(fRead) >= 6:
         appExists = True
         
-    createApp = open("app/{0}.desktop".format(appName), 'w')
+    createApp = open("{0}.desktop".format(appName), 'w')
     defaultFile = open(BUILD_FILE, 'w')
 
     # If app doesn't exist, create files
     if not appExists:
         createFile(fRead, createApp, defaultFile, False)
     else: 
-        createFile(fRead, createApp, defaultFile, True)
+        createFile(fRead, createApp, defaultFile, False)
 
     # Close all files
     fileRead.close()
@@ -56,7 +56,7 @@ def createFile(fRead, createApp, defaultFile, default=True):
     files.
     """ 
     # Write to files
-    runCmd = "Exec=python3.6 {0}/run.py\n".format(os.getcwd().replace(' ', "_"))
+    runCmd = "Exec=python3.8 {0}/run.py\n".format(os.getcwd().replace(" ", "\\ "))
     files = [createApp, defaultFile]
     for _file in files:
         if default:
@@ -71,7 +71,7 @@ def remFile():
     """
     Remove all App's in directory.
     """
-    cmd = "rm app/*.desktop"
+    cmd = "rm *.desktop"
     os.system(cmd)
 
 

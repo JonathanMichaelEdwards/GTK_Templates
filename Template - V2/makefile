@@ -7,172 +7,63 @@
 
 
 
-# # App Name
-# TARGET = main
+# App Name
+TARGET = template
 
 
-
-# # Compiling and Linking Definitions.
-# CC = g++ $(INCLUDES)
-# CFLAGS = -g -Wall -std=c++11
-# INCLUDES = -I./../include
-# OPENGL_LIB = -lGL -lGLU -lGLEW -lglut
-# exe = -no-pie  # changes (x-libshare -> x-executable)
-
-# # Getting Object Name Automatically.
-# SOURCES_LOCATION  = ../src
-# SOURCES = $(wildcard $(SOURCES_LOCATION)/*.cpp)
-# OBJECTS = $(patsubst $(SOURCES_LOCATION)/%.cpp, %.o, $(SOURCES))
-
-
-# # Printing pretty.
-# PRINT_BEGIN      = "======================================================================================================================"
-# PRINT_END        = "======================================================================================================================\n\n"
-# REMOVE_MESSAGE   = "-------------------------------------- Removing all object and executable files --------------------------------------"
-# LINK_NAN_MESSAGE = "------------------------------------------ Creating non linked object files ------------------------------------------"
-# LINK_OBJ_MESSAGE = "-------------------------------- Linkng all object files to create an executable file --------------------------------"
-# COMPLETE_MESSAGE = Succesfully Compiled Program...
-
-
-
-# Definitions.
+# Compiling and Linking Definitions
 CC = g++
 INCLUDES = -I./include
 CFLAGS = -g -Wall -std=c++17 $(INCLUDES) -pthread
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
 
 
+# Printing pretty.
+PRINT_BEGIN      = "==============================================================================================================================================="
+PRINT_END        = "===============================================================================================================================================\n\n"
+REMOVE_MESSAGE   = "-------------------------------------------------- Removing all object and executable files ---------------------------------------------------"
+OBJ_MESSAGE = "------------------------------------------------------------ Creating Object Files ------------------------------------------------------------"
+LINK_OBJ_MESSAGE = "----------------------------------------------------------- Linkng all object files -----------------------------------------------------------"
+COMPLETE_MESSAGE = Succesfully Compiled Program...
+
+
+
 # Default target.
-all: app/template.exe
-# cd app && python3.6 build.py build && chmod +x app/*.desktop
+all: clean build/$(TARGET).exe
+	@echo
+	cd app && python3.8 build.py build && chmod +x *.desktop
 
 
-# Getting Object Name Automatically.
+# Getting Object Name Automatically
 SOURCES = $(wildcard src/*.cpp)
-OBJECTS = $(patsubst src/%.cpp, app/%.o, $(SOURCES))
+OBJECTS = $(patsubst src/%.cpp, build/%.o, $(SOURCES))
 
 
-app/%.o: src/%.cpp
+build/%.o: src/%.cpp
 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-
-# Link: create ELF output file from object files.
-app/template.exe: $(OBJECTS)
-	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
 	
 
-# Target: Clean Project.
-.PHONY: cleanProject
+
+# Link Object Files
+.PHONY: Link
+build/$(TARGET).exe: $(OBJECTS)
+	@echo $(PRINT_END)
+	@echo $(LINK_OBJ_MESSAGE)
+	@echo $(PRINT_BEGIN)
+	$(CC) $^ -o $@ $(GTK_LIB) 
+	@echo $(PRINT_END)
+	@echo $(COMPLETE_MESSAGE)
+	
+
+# Clean Project
+.PHONY: CleanProject
 clean:
-	cd app && rm -f *.o *.exe
-# cd app && python3.6 build.py remove
+	@echo $(REMOVE_MESSAGE)
+	@echo $(PRINT_BEGIN)
+	cd build && rm -f *.o *.exe
+	@echo $(PRINT_END)
+	@echo $(OBJ_MESSAGE)
+	@echo $(PRINT_BEGIN)
 	
-
-
-
-
-
-# # Default target.
-# all: clean $(TARGET)
-# 	@echo $(COMPLETE_MESSAGE)
-
-
-# # Compile: create object files from C source files.
-# %.o: $(SOURCES_LOCATION)/%.cpp
-# 	$(CC) -c -o $@ $< $(CFLAGS)
-
-
-# # Link: create ELF output file from object files.
-# $(TARGET): $(OBJECTS)
-# 	@echo $(PRINT_END)
-# 	@echo $(LINK_OBJ_MESSAGE)
-# 	@echo $(PRINT_BEGIN)
-# 	$(CC) $(exe) -o $@ $^ $(OPENGL_LIB) 
-# 	@echo $(PRINT_END)
-	
-
-# # Target: Clean Project.
-# .PHONY: cleanProject
-# clean:
-# 	@echo $(REMOVE_MESSAGE)
-# 	@echo $(PRINT_BEGIN)
-# 	-rm -f *.o main
-# 	@echo $(PRINT_END)
-# 	@echo $(LINK_NAN_MESSAGE)
-# 	@echo $(PRINT_BEGIN)
-
-
-
-# # Definitions.
-# CC = gcc
-# INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
-# CFLAGS = -g -Wall -std=c99 $(INCLUDES) -pthread
-# GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
-
-
-# # Default target.
-# all: app/Code_Manager.out
-# 	cd app && python3.6 build.py build && chmod +x app/*.desktop
-
-
-# # Compile: create object files from C source files.
-# app/main.o: src/main.c
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/chooseFolder.o: src/Dialog/chooseFolder.c include/Dialog/chooseFolder.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/manager.o: src/manager.c include/manager.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/createProject.o: src/Create_Project/createProject.c include/Create_Project/createProject.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-
-# # Link: create ELF output file from object files.
-# app/Code_Manager.out: app/main.o app/chooseFolder.o app/manager.o app/createProject.o
-# 	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
-	
-
-# # Target: Clean Project.
-# .PHONY: cleanProject
-# clean:
-# 	cd app && rm -f *.o *.out
-# 	cd app && python3.6 build.py remove
-# 	# Definitions.
-# CC = gcc
-# INCLUDES = -I./include -I./include/Dialog -I./include/Create_Project
-# CFLAGS = -g -Wall -std=c99 $(INCLUDES) -pthread
-# GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
-
-
-# # Default target.
-# all: app/Code_Manager.out
-# 	cd app && python3.6 build.py build && chmod +x app/*.desktop
-
-
-# # Compile: create object files from C source files.
-# app/main.o: src/main.c
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/chooseFolder.o: src/Dialog/chooseFolder.c include/Dialog/chooseFolder.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/manager.o: src/manager.c include/manager.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-# app/createProject.o: src/Create_Project/createProject.c include/Create_Project/createProject.h
-# 	$(CC) -c $(CFLAGS) $< -o $@ $(GTK_LIB) 
-
-
-# # Link: create ELF output file from object files.
-# app/Code_Manager.out: app/main.o app/chooseFolder.o app/manager.o app/createProject.o
-# 	$(CC) -no-pie $^ -o $@ $(GTK_LIB) 
-	
-
-# # Target: Clean Project.
-# .PHONY: cleanProject
-# clean:
-# 	cd app && rm -f *.o *.out
-# 	cd app && python3.6 build.py remove
+# cd app && python3.8 build.py remove
 	

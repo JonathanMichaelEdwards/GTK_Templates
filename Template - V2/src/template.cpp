@@ -1,10 +1,6 @@
-// #include <iostream>
 #include <stdio.h>
-#include <stdlib.h>
 #include <gtk/gtk.h>
-#include "manager.h"
-// #include "createProject.h"
-// #include "chooseFolder.h"
+#include "demoWindow.h"
 
 
 

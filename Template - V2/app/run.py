@@ -2,6 +2,10 @@ import os
 import build
 
 
+APP_NAME = "template"
+
+
+
 def runProgram():
     """
     When the executable Desktop App is pressed in 
@@ -17,9 +21,9 @@ def runProgram():
     _file = open(buildFile, 'r')
 
     contents = _file.readlines()
-    dirExe = contents[4].strip("Exec=python3.6 ").strip("run.py\n")
-    appExe = contents[1].strip("Name=\n").replace(' ', '_')
-    os.system("cd {0} && ./{1}.out".format(dirExe, appExe))
+    # dirExe = contents[4].strip("Exec=python3.8 ").strip("run.py\n")
+    # appExe = contents[1].strip("Name=\n").replace(' ', '_')
+    os.system("cd ../build && ../build/{0}.exe".format(APP_NAME))
     
     # Close file
     _file.close()
