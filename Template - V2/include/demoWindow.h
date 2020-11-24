@@ -3,7 +3,7 @@
 
 
 
-void manager(char *path);
+void manager(char * path);
 
 
 #endif // DEMO_WINDOW_H

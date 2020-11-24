@@ -17,7 +17,7 @@
 		
 		{
 			"label": "Run",
-			"command": "cd build && ./template.exe",
+			"command": "build/template.exe",
 			"type": "shell",
 			"presentation": {
                 "showReuseMessage": true,
