@@ -1,56 +1,62 @@
 import sys
 import os
 
-# Defining Usable Files
-BUILD_FILE = "app.txt"
-ICON_FILE_NAME = "file.png"
+# Defines
+# BUILD_FILE = "app.txt"
+# ICON_FILE_NAME = 
 
-# Usable Icons
-dirIcons = "Icon={0}/images".format(os.getcwd())
-icon1 = "{0}/{1}\n".format(dirIcons, ICON_FILE_NAME)
-
-
-def getNameOfApp(_file):
-    """
-    Get the name of the app from the file.
-    return -> (fileRead, fRead, appName)
-    """
-    fileRead = open(_file, 'r')
-    fRead = fileRead.readlines()
-    appName = fRead[1].strip("Name=\n")
-
-    return (fileRead, fRead, appName)
+# # Usable Icons
+# dirIcons = "Icon=graphics/{0}/images".format(os.getcwd())
+# icon1 = "{0}/{1}\n".format(dirIcons, ICON_FILE_NAME)
 
 
-def makeFile():
+# def getNameOfApp(_file):
+#     """
+#     Get the name of the app from the file.
+#     return -> (fileRead, fRead, appName)
+#     """
+#     fileRead = open(_file, 'r')
+#     fRead = fileRead.readlines()
+#     appName = fRead[1].strip("Name=\n")
+
+#     return (fileRead, fRead, appName)
+
+
+def genApp(appName, iconName):
     """
     Link output files and programs together.
     Append and link the App directory.
     """
-    appExists = False
-    (fileRead, fRead, appName) = getNameOfApp(BUILD_FILE)
-  
-    # If 'Exec' and 'Icons' can be found, app already exists
+    # appExists = False
+    # (fileRead, fRead, appName) = getNameOfApp(BUILD_FILE)
 
-    if len(fRead) >= 6:
-        appExists = True
+
         
     createApp = open("{0}.desktop".format(appName), 'w')
-    defaultFile = open(BUILD_FILE, 'w')
 
-    # If app doesn't exist, create files
-    if not appExists:
-        createFile(fRead, createApp, defaultFile, False)
-    else: 
-        createFile(fRead, createApp, defaultFile, False)
+
+    _dir = os.getcwd().replace(" ", "\\ ")
+    createApp.write(
+        "[Desktop Entry]\n" +
+        "Name={0}\n".format(appName) +
+        "Type=Application\n"  +
+        "Terminal=false\n"    +
+        "Exec=python3.8 {0}/run.py\n".format(_dir) +
+        "Icon={0}/../graphics/images/{1}".format(_dir, iconName)
+    )
+
+
+
+    # defaultFile = open(BUILD_FILE, 'w')
+
+    # createFile(fRead, createApp, defaultFile)
+
 
     # Close all files
-    fileRead.close()
-    defaultFile.close()
     createApp.close()
     
     
-def createFile(fRead, createApp, defaultFile, default=True):
+def createFile(fRead, createApp, defaultFile):
     """
     Append and Write new content to existing/valid 
     files.
@@ -59,12 +65,9 @@ def createFile(fRead, createApp, defaultFile, default=True):
     runCmd = "Exec=python3.8 {0}/run.py\n".format(os.getcwd().replace(" ", "\\ "))
     files = [createApp, defaultFile]
     for _file in files:
-        if default:
-            _file.writelines(fRead)
-        else:
-            _file.writelines(fRead)
-            _file.write(runCmd)
-            _file.write(icon1)
+        _file.writelines(fRead)
+        _file.write(runCmd)
+        _file.write(icon1)
 
 
 def remFile():
@@ -92,12 +95,8 @@ def resetFile():
 
 # Run script build.py
 if __name__ == "__main__":
-    # If arguments inputed with valid cmd, change info
-    if len(sys.argv) > 1:
-        fInput = sys.argv[1]
-        if fInput == "build":
-            makeFile()
-        elif fInput == "remove":
-            remFile()
-            resetFile()
-
+    if sys.argv[1] == "build":      # Generate Desktop App
+        genApp(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "remove":   # Remove Desktop App
+        remFile()
+        resetFile()

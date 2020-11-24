@@ -1,14 +1,15 @@
 #  ============================================================================
 #  Author:       Jonathan Edwards
-#  Date:         14/11/2020
+#  Date:         24/11/2020
 #  Description:  Compiles and links all object files to create an ELF output 
 #                file for Linux.
 #  ============================================================================
 
 
 
-# App Name
-TARGET = template
+# App details
+APP_NAME = template
+APP_ICON = folder.png
 
 
 # Compiling and Linking Definitions
@@ -22,16 +23,16 @@ GTK_LIB = `pkg-config --cflags --libs gtk+-3.0` -rdynamic
 PRINT_BEGIN      = "==============================================================================================================================================="
 PRINT_END        = "===============================================================================================================================================\n\n"
 REMOVE_MESSAGE   = "-------------------------------------------------- Removing all object and executable files ---------------------------------------------------"
-OBJ_MESSAGE = "------------------------------------------------------------ Creating Object Files ------------------------------------------------------------"
+OBJ_MESSAGE      = "------------------------------------------------------------ Creating Object Files ------------------------------------------------------------"
 LINK_OBJ_MESSAGE = "----------------------------------------------------------- Linkng all object files -----------------------------------------------------------"
 COMPLETE_MESSAGE = Succesfully Compiled Program...
 
 
 
 # Default target.
-all: clean build/$(TARGET).exe
+all: clean build/$(APP_NAME).exe
 	@echo
-	cd app && python3.8 build.py build && chmod +x *.desktop
+	cd app && python3.8 build.py build $(APP_NAME) $(APP_ICON) && chmod +x $(APP_NAME).desktop
 
 
 # Getting Object Name Automatically
@@ -46,7 +47,7 @@ build/%.o: src/%.cpp
 
 # Link Object Files
 .PHONY: Link
-build/$(TARGET).exe: $(OBJECTS)
+build/$(APP_NAME).exe: $(OBJECTS)
 	@echo $(PRINT_END)
 	@echo $(LINK_OBJ_MESSAGE)
 	@echo $(PRINT_BEGIN)

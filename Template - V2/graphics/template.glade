@@ -44,7 +44,7 @@
               <object class="GtkImage">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixbuf">images/CREATE_A_PROJECT-512_resized.png</property>
+                <property name="pixbuf">images/folder.png</property>
               </object>
             </child>
           </object>
