@@ -39,9 +39,9 @@ extern "C" void btnFile(GtkButton *button, Layout *_window)
 /**
  * Runs the Managers GUI application
  */
-void manager(void)
+void manager(char *path)
 {
     Window *_window = NULL;
 
-    BuildWindow window(_window, WidgetNames, FILENAME, STRUCT_SIZE);
+    BuildWindow window(path, _window, WidgetNames, FILENAME, STRUCT_SIZE);
 }

@@ -3,8 +3,6 @@
 #include "createWindow.h"
 
 
-#define LEN_OF_FILE(NAME) 19 + strlen(NAME)
-
 
 
 Window *builderGetObject(GtkBuilder *builder, Window *widgets, const char *names[], int size)
@@ -17,14 +15,15 @@ Window *builderGetObject(GtkBuilder *builder, Window *widgets, const char *names
 }
 
 
-BuildWindow::BuildWindow(Window *widgets, const char *names[], const char *title, int size)
+BuildWindow::BuildWindow(char *path, Window *widgets, const char *names[], const char *title, int size)
 {
     widgets = (Window*)malloc(sizeof(Window));
 
     // Link the Glade GUI builder
-    char *fileG = (char*)malloc(sizeof(char) * LEN_OF_FILE(names[0]));
-    sprintf(fileG, "../graphics/%s.glade", names[0]);
+    char *fileG = (char*)malloc(sizeof(char) * 100);
+    sprintf(fileG, "%s/%s.glade", realpath("../graphics/", NULL), names[0]);  // abs path
     GtkBuilder *builder = gtk_builder_new_from_file(fileG);
+
 
     // Create the default Window
     GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, names[0]));

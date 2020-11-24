@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     gtk_init(&argc, &argv);
 
     // run the program
-    manager();
+    manager(argv[0]);
 
 
     return EXIT_SUCCESS;

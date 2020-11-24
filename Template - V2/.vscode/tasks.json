@@ -27,7 +27,7 @@
 
 		{
 			"label": "Clean",
-			"command": "make clean",
+			"command": "make clean_2",
 			"type": "shell",
 			"presentation": {
                 "showReuseMessage": true,

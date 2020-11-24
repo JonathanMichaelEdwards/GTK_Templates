@@ -25,14 +25,23 @@ PRINT_END        = "============================================================
 REMOVE_MESSAGE   = "-------------------------------------------------- Removing all object and executable files ---------------------------------------------------"
 OBJ_MESSAGE      = "------------------------------------------------------------ Creating Object Files ------------------------------------------------------------"
 LINK_OBJ_MESSAGE = "----------------------------------------------------------- Linkng all object files -----------------------------------------------------------"
-COMPLETE_MESSAGE = Succesfully Compiled Program...
+BUILD_APP        = "---------------------------------------------------------- Making Desktop Application ----------------------------------------------------------"
+COMPLETE_MESSAGE_COMPILE = Successfully Compiled Program...
+COMPLETE_MESSAGE_APP     = Successfully Built Desktop App...
+CLEANED_MESSAGE          = Successfully Cleaned Project...
 
 
 
 # Default target.
 all: clean build/$(APP_NAME).exe
-	@echo
-	cd app && python3.8 build.py build $(APP_NAME) $(APP_ICON) && chmod +x $(APP_NAME).desktop
+	@echo "\n\n"
+	@echo $(BUILD_APP)
+	@echo $(PRINT_BEGIN)
+	cd app && python3.8 build.py $(APP_NAME) $(APP_ICON) \
+	&& chmod +x $(APP_NAME).desktop
+	@echo $(PRINT_END)
+	@echo $(COMPLETE_MESSAGE_APP)
+
 
 
 # Getting Object Name Automatically
@@ -53,7 +62,7 @@ build/$(APP_NAME).exe: $(OBJECTS)
 	@echo $(PRINT_BEGIN)
 	$(CC) $^ -o $@ $(GTK_LIB) 
 	@echo $(PRINT_END)
-	@echo $(COMPLETE_MESSAGE)
+	@echo $(COMPLETE_MESSAGE_COMPILE)
 	
 
 # Clean Project
@@ -61,10 +70,20 @@ build/$(APP_NAME).exe: $(OBJECTS)
 clean:
 	@echo $(REMOVE_MESSAGE)
 	@echo $(PRINT_BEGIN)
-	cd build && rm -f *.o *.exe
+	cd build && rm -f *.o *.exe && \
+	cd ../app && rm -f *.desktop
 	@echo $(PRINT_END)
+	@echo "$(CLEANED_MESSAGE) \n\n\n"
 	@echo $(OBJ_MESSAGE)
 	@echo $(PRINT_BEGIN)
 	
-# cd app && python3.8 build.py remove
+
+.PHONY: CleanProject_2
+clean_2:
+	@echo $(REMOVE_MESSAGE)
+	@echo $(PRINT_BEGIN)
+	cd build && rm -f *.o *.exe && \
+	cd ../app && rm -f *.desktop
+	@echo $(PRINT_END)
+	@echo $(CLEANED_MESSAGE)
 	

@@ -3,4 +3,4 @@ Name=template
 Type=Application
 Terminal=false
 Exec=python3.8 /mnt/A4FC64C5FC64937A/Documents/Projects/GTK/Templates/Template\ -\ V2/app/run.py
-Icon=/mnt/A4FC64C5FC64937A/Documents/Projects/GTK/Templates/Template\ -\ V2/app/../graphics/images/folder.png
+Icon=/mnt/A4FC64C5FC64937A/Documents/Projects/GTK/Templates/Template - V2/app/../graphics/images/folder.png

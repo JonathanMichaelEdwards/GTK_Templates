@@ -25,7 +25,7 @@ class BuildWindow
     private:
         /* data */
     public:
-        BuildWindow(Window *widgets, const char *names[], const char *title, int size);
+        BuildWindow(char *path, Window *widgets, const char *names[], const char *title, int size);
         ~BuildWindow();
 };
 
